@@ -8,6 +8,9 @@ public class Digits4Chars {
   }
 
   private static int countDecodings(String enc, int start, int chars) {
+    if(enc.charAt(start) == '0') {
+      return 0;
+    }
     if(chars == 0 || chars == 1) {
       return 1;
     }
@@ -23,7 +26,7 @@ public class Digits4Chars {
 
   public static void main(String[] args) {
     System.out.println("Hello Coin Digits4Chars ");
-    final String str = "127";
+    final String str = "11106";//"06"; //"0"; //"226"; 
     System.out.println("Decs for " + str + " is: " + countDecodings(str));
   }
 
