@@ -1,10 +1,8 @@
-package main.java.com.example;
-
-import java.util.Arrays;
-import java.util.Scanner;
+//import java.util.Arrays;
+//import java.util.Scanner;
 import java.util.Stack;
-import java.util.Deque;
-import java.util.LinkedList;
+//import java.util.Deque;
+//import java.util.LinkedList;
 
 public class MinStack {
   Stack<Integer> stack;
