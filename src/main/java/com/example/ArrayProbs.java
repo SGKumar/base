@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 import java.util.List;
 
 public class ArrayProbs {
@@ -47,9 +48,68 @@ public class ArrayProbs {
     return (i==sz);
   }
 
+  //2-dimensional arrays
+  private static void clickMineSweeper(int[][] array, int i, int j) {
+    // fill 0s with -2 for neighboring empty cells
+    // -1 is a mine, +ve vals say how many mines in nearby cells
+    if(array[i][j] != 0) {
+      return;
+    }
+    Stack<Point> s = new Stack<>();
+    array[i][j] = -2;
+    s.push(new Point(i,j));
+    while(!s.isEmpty()) {
+      Point p = s.pop();
+      pushValidNeighbors(array, s, p);
+    }
+
+  }
+
+  private static void pushValidNeighbors(int[][] array, Stack<Point> s, Point p) {
+    int rows = array.length;
+    int cols = array[0].length;
+
+    if(p.getx() > 0 && array[p.getx()-1][p.gety()] == 0) {
+      array[p.getx()-1][p.gety()] = -2;
+      s.push(new Point(p.getx()-1,p.gety()));
+    }
+    if(p.getx() < rows-1 && array[p.getx()+1][p.gety()] == 0) {
+      array[p.getx()+1][p.gety()] = -2;
+      s.push(new Point(p.getx()+1,p.gety()));
+    }
+    if(p.gety() > 0 && array[p.getx()][p.gety()-1] == 0) {
+      array[p.getx()][p.gety()-1] = -2;
+      s.push(new Point(p.getx(),p.gety()-1));
+    }
+    if(p.gety() < cols-1 && array[p.getx()][p.gety()+1] == 0) {
+      array[p.getx()][p.gety()+1] = -2;
+      s.push(new Point(p.getx(),p.gety()+1));
+    }
+  }
+
   public static void main(String[] args) {
-    commonElements();
-    arrayRotation();
+    //commonElements();
+    //arrayRotation();
+    clicks();
+  }
+
+  private static void clicks() {
+    int[][] array = {{0, 0, 0, 0, 0}, {0, 1, 1, 1, 0}, {0, 1, -1, 1, 0}};
+    System.out.println("Orig: " + Arrays.deepToString(array));
+
+    clickMineSweeper(array, 0, 1);
+    System.out.println("After sweep: " + Arrays.deepToString(array));
+
+    int[][] field2 = {{-1, 1, 0, 0}, 
+    {1, 1, 0, 0},
+    {0, 0, 1, 1},
+    {0, 0, 1, -1}};
+    System.out.println("Orig: " + Arrays.deepToString(field2));
+    clickMineSweeper(field2, 0, 1);
+    System.out.println("After sweep: " + Arrays.deepToString(field2));
+
+    clickMineSweeper(field2, 1, 3);
+    System.out.println("After sweep: " + Arrays.deepToString(field2));
   }
 
   private static void arrayRotation() {
